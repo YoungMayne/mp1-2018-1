@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <conio.h>
 
 using namespace std;
 
@@ -8,18 +7,18 @@ class LongNumber {
 	char nullArray[20];
 	bool longChecker;
 private:
-	//Р·Р°РїРѕР»РЅСЏРµС‚ РјР°СЃСЃРёРІ РЅСѓР»СЏРјРё
+	//заполняет массив нулями
 	void ZeroArray() {
 		for (char i = 0; i < 20; i++)
 			nullArray[i] = '0';
 	}
-	//РїРѕРІС‹С€Р°РµС‚ СЂР°Р·СЂСЏРґ С‡РёСЃР»Р°(РµРґРёРЅРёС†С‹ РІ РґРµСЃСЏС‚РєРё Рё С‚Рґ.)
+	//повышает разряд числа(единицы в десятки и тд.)
 	void UpRank() {
 		for (int i = 20; i > 0; i--)
 			nullArray[i] = nullArray[i - 1];
 		nullArray[0] = '0';
 	}
-	//С„-С†РёСЏ РїСЂРµРѕР±СЂР°Р·РѕРІС‹РІР°РµС‚ С‡РёСЃР»Р° С‚РёРїР° char РІ С‡РёСЃР»Р° С‚РёРїР° int
+	//ф-ция преобразовывает числа типа char в числа типа int
 	int ChangeChar(char number) {
 		switch (number) {
 		case '1': return 1;
@@ -34,7 +33,7 @@ private:
 		default:  return 0;
 		}
 	}
-	//С‚РѕР¶Рµ СЃР°РјРѕРµ С‚РѕР»СЊРєРѕ РЅР°РѕР±РѕСЂРѕС‚
+	//тоже самое только наоборот
 	char ChangeCharBack(int number) {
 		switch (number) {
 		case 1: return '1';
@@ -53,7 +52,7 @@ public:
 	LongNumber() {
 		ZeroArray();
 	}
-	//РёРґРµРЅС‚РёС„РёРєР°С†РёСЏ СЌР»РµРјРµРЅС‚РѕРІ СЃС‚СЂРѕРєРё, Р·Р°РЅРµСЃРµРЅРёРµ РєР°Р¶РґРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РІ СЏС‡РµР№РєСѓ РјР°СЃСЃРёРІР°
+	//идентификация элементов строки, занесение каждого элемента в ячейку массива
 	LongNumber(char number[]) {
 		int sLength = strlen(number);
 		ZeroArray();
@@ -64,24 +63,24 @@ public:
 			}
 		}
 	}
-	//СЃР»РѕР¶РµРЅРёРµ
+	//сложение
 	LongNumber operator+(const LongNumber &number) {
 		LongNumber tmp;
 		int temp = 0;
 		int remainder;
 		for (int i = 0; i < 20; i++) {
-			temp = (ChangeChar(nullArray[i])) + (ChangeChar(number.nullArray[i])) + temp;//РїРµСЂРµРґР°РµРј РІ РїРµСЂРµРјРµРЅРЅСѓСЋ СЂРµР·СѓР»СЊС‚Р°С‚ СЃР»РѕР¶РµРЅРёСЏ СЏС‡РµРµРє РґРІСѓС… РјР°СЃСЃРёРІРѕРІ 
-			remainder = temp % 10;//РІС‹С‚Р°СЃРєРёРІР°РµС‚ РїРѕСЃР»РµРґРЅСЋСЋ С†РёС„СЂСѓ РёР· С‡РёСЃР»Р°
+			temp = (ChangeChar(nullArray[i])) + (ChangeChar(number.nullArray[i])) + temp;//передаем в переменную результат сложения ячеек двух массивов 
+			remainder = temp % 10;//вытаскивает последнюю цифру из числа
 			if (remainder < 0) {
 				remainder += 10;
 				temp -= 10;
 			}
-			tmp.nullArray[i] = ChangeCharBack(remainder);//РїРµСЂРµРґР°РµРј РІ "РјР°СЃСЃРёРІ РѕС‚РІРµС‚РѕРІ" 
-			temp /= 10;//СЃРґРІРёРіР°РµС‚ С‡РёСЃР»Р° РІР»РµРІРѕ
+			tmp.nullArray[i] = ChangeCharBack(remainder);//передаем в "массив ответов" 
+			temp /= 10;//сдвигает числа влево
 		}
-		return tmp;//РІРѕР·РІСЂР°С‰Р°РµРј РѕС‚РІРµС‚
+		return tmp;//возвращаем ответ
 	}
-	//РІС‹С‡РёС‚Р°РЅРёРµ
+	//вычитание
 	LongNumber operator-(const LongNumber &number) {
 		if (*this < number)
 			return "Negative";
@@ -89,45 +88,44 @@ public:
 		int temp = 0;
 		int remainder;
 		for (int i = 0; i < 20; i++) {
-			temp = (ChangeChar(nullArray[i])) - (ChangeChar(number.nullArray[i])) + temp;//РїРµСЂРµРґР°РµРј РІ РїРµСЂРµРјРµРЅРЅСѓСЋ СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹С‡РёС‚Р°РЅРёСЏ СЏС‡РµРµРє РґРІСѓС… РјР°СЃСЃРёРІРѕРІ 
-			remainder = temp % 10;//РІС‹С‚Р°СЃРєРёРІР°РµС‚ РїРѕСЃР»РµРґРЅСЋСЋ С†РёС„СЂСѓ РёР· С‡РёСЃР»Р°
+			temp = (ChangeChar(nullArray[i])) - (ChangeChar(number.nullArray[i])) + temp;//передаем в переменную результат вычитания ячеек двух массивов 
+			remainder = temp % 10;//вытаскивает последнюю цифру из числа
 			if (remainder < 0) {
 				remainder += 10;
 				temp -= 10;
 			}
-			tmp.nullArray[i] = ChangeCharBack(remainder);//РїРµСЂРµРґР°РµРј РІ "РјР°СЃСЃРёРІ РѕС‚РІРµС‚РѕРІ"
+			tmp.nullArray[i] = ChangeCharBack(remainder);//передаем в "массив ответов"
 			temp /= 10;
 		}
-		return tmp;//РІРѕР·РІСЂР°С‰Р°РµРј СЂРµР·СѓР»СЊС‚Р°С‚
+		return tmp;//возвращаем результат
 	}
-	//СѓРјРЅРѕР¶РµРЅРёРµ
+	//умножение
 	LongNumber operator*(const LongNumber &number) {
 		LongNumber	temporary;
 		LongNumber tmp;
-		int	temp = 0;//РѕСЃС‚Р°С‚РѕРє РґРµСЃСЏС‚РѕРє
-		int	temp2 = 0;//РѕСЃС‚Р°С‚РѕРє РµРґРёРЅРёС†
+		int	temp = 0;//остаток десяток
+		int	temp2 = 0;//остаток единиц
 
 		for (int j = 0; j < 20; j++) {
 			for (int i = 0; i < 20 - j; i++) {
-				if (number.nullArray[j] == '0')//РёРіРЅРѕСЂРёСЂСѓРµРј РЅСѓР»Рё
+				if (number.nullArray[j] == '0')//игнорируем нули
 					continue;
-				temp2 = ChangeChar(nullArray[i]) * ChangeChar(number.nullArray[j]);//СЂРµР·СѓР»СЊС‚Р°С‚ СѓРјРЅРѕР¶РµРЅРёСЏ СЏС‡РµРµРє РґРІСѓС… РјР°СЃСЃРёРІРѕРІ
-				temporary.nullArray[i + j] = ChangeCharBack((temp2 += temp) % 10);//Р·Р°РїРёСЃС‹РІР°РµС‚ СЂРµР·СѓР»СЊС‚Р°С‚ РІ РјР°СЃСЃРёРІ
-				temp = temp2 / 10;//СЃРґРІРёРіР°РµРј РјР°СЃСЃРёРІ РІР»РµРІРѕ
+				temp2 = ChangeChar(nullArray[i]) * ChangeChar(number.nullArray[j]);//результат умножения ячеек двух массивов
+				temporary.nullArray[i + j] = ChangeCharBack((temp2 += temp) % 10);//записывает результат в массив
+				temp = temp2 / 10;//сдвигаем массив влево
 			}
-			tmp = tmp + temporary;//РѕС‚РІРµС‚
-			temporary = "0";//РѕР±РЅСѓР»СЏРµРј СЂРµР·СѓР»СЊС‚Р°С‚ СѓРјРЅРѕР¶РµРЅРёСЏ
+			tmp = tmp + temporary;//ответ
+			temporary = "0";//обнуляем результат умножения
 		}
-		return tmp;//РІРѕР·РІСЂР°С‰Р°РµРј СЂРµР·СѓР»СЊС‚Р°С‚
+		return tmp;//возвращаем результат
 	}
-	//РґРµР»РµРЅРёРµ
+	//деление
 	LongNumber operator/(const LongNumber &number) {
-
 		int i = 20;
 		LongNumber tmp;
-		LongNumber dividendPart;//С‡Р°СЃС‚СЊ РѕС‚ РґРµР»РµРЅРёСЏ 
-		LongNumber divider(number);// РґРµР»РёС‚РµР»СЊ 
-		LongNumber dividend(*this);// РґРµР»РёРјРѕРµ 
+		LongNumber dividendPart;//часть от деления 
+		LongNumber divider(number);// делитель 
+		LongNumber dividend(*this);// делимое 
 		bool started = false;
 
 		if (divider == (LongNumber)"0") {
@@ -156,14 +154,14 @@ public:
 		} while (i > 0);
 		return tmp;
 	}
-	//РґРµР»РµРЅРёРµ СЃ РѕСЃС‚Р°С‚РєРѕРј
+	//деление с остатком
 	LongNumber operator%(const LongNumber &number) {
 
 		int i = 20;
 		LongNumber tmp;
-		LongNumber dividendPart;//РџСЂРѕРјРµР¶СѓС‚РѕС‡РЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ 
-		LongNumber divider(number);// Р”РµР»РёС‚РµР»СЊ 
-		LongNumber dividend(*this);// Р”РµР»РёРјРѕРµ 
+		LongNumber dividendPart;//Промежуточное произведение 
+		LongNumber divider(number);// Делитель 
+		LongNumber dividend(*this);// Делимое 
 		bool started = false;
 
 		if (divider == (LongNumber)"0") {
@@ -194,76 +192,76 @@ public:
 		return tmp;
 	}
 
-	//РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ		
+	//оператор присваивания		
 	LongNumber operator=(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--)
 			nullArray[i] = number.nullArray[i];
 		return *this;
 	}
-	//РїСЂРѕРІРµСЂРєР° РЅР° СЂР°РІРµРЅСЃС‚РІРѕ
+	//проверка на равенство
 	bool operator==(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--) {
-			//РµСЃР»Рё РєР°РєРёРµ-С‚Рѕ СЌР»РµРјРµРЅС‚С‹ РјР°СЃСЃРёРІРѕРІ РЅРµ СЂР°РІРЅС‹ , РІРѕР·РІСЂР°С‰Р°РµРј false
+			//если какие-то элементы массивов не равны , возвращаем false
 			if (ChangeChar(nullArray[i]) != ChangeChar(number.nullArray[i])) {
 				return false;
 			}
 		}
 		return true;
 	}
-	//РїСЂРѕРІРµСЂРєР° РЅР° РЅРµСЂР°РІРµРЅСЃС‚РІРѕ
+	//проверка на неравенство
 	bool operator!=(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--) {
-			//РµСЃР»Рё РєР°РєРёРµ-С‚Рѕ СЌР»РµРјРµРЅС‚С‹ РјР°СЃСЃРёРІРѕРІ РЅРµ СЂР°РІРЅС‹ , РІРѕР·РІСЂР°С‰Р°РµРј true
+			//если какие-то элементы массивов не равны , возвращаем true
 			if (ChangeChar(nullArray[i]) != ChangeChar(number.nullArray[i])) {
 				return true;
 			}
 		}
 		return false;
 	}
-	//РїСЂРѕРІРµСЂРєР° РЅР° РјРµРЅСЊС€РµСЃС‚СЊ
+	//проверка на меньшесть
 	bool operator<(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--) {
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° РјРµРЅСЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ true
+			//если элемент массива меньше , возвращает true
 			if (ChangeChar(nullArray[i]) < ChangeChar(number.nullArray[i]))
 				return true;
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° Р±РѕР»СЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ false
+			//если элемент массива больше , возвращает false
 			if (ChangeChar(nullArray[i]) > ChangeChar(number.nullArray[i]))
 				return false;
 		}
-		//РѕР±С‰РёР№ РІС‹С…РѕРґ, РЅСѓР¶РµРЅ РєРѕРіРґР°, С‡РёСЃР»Р° РІ СЃС‚СЂРѕРєР°С… СЂР°РІРЅС‹
+		//общий выход, нужен когда, числа в строках равны
 		return false;
 	}
-	//РїСЂРѕРІРµСЂРєР° РЅР° РјРµРЅСЊС€РµСЃС‚СЊ/СЂР°РІРЅРѕСЃС‚СЊ
+	//проверка на меньшесть/равность
 	bool operator<=(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--) {
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° РјРµРЅСЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ true
+			//если элемент массива меньше , возвращает true
 			if (ChangeChar(nullArray[i]) < ChangeChar(number.nullArray[i]))
 				return true;
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° Р±РѕР»СЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ false
+			//если элемент массива больше , возвращает false
 			if (ChangeChar(nullArray[i]) > ChangeChar(number.nullArray[i]))
 				return false;
 		}
 	}
-	//РїСЂРѕРІРµСЂРєР° РЅР° Р±РѕР»СЊС€РµСЃС‚СЊ
+	//проверка на большесть
 	bool operator>(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--) {
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° Р±РѕР»СЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ true
+			//если элемент массива больше , возвращает true
 			if (ChangeChar(nullArray[i]) > ChangeChar(number.nullArray[i]))
 				return true;
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° РјРµРЅСЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ false
+			//если элемент массива меньше , возвращает false
 			if (ChangeChar(nullArray[i]) < ChangeChar(number.nullArray[i]))
 				return false;
 		}
-		//РѕР±С‰РёР№ РІС‹С…РѕРґ, РЅСѓР¶РµРЅ РєРѕРіРґР°, С‡РёСЃР»Р° РІ СЃС‚СЂРѕРєР°С… СЂР°РІРЅС‹
+		//общий выход, нужен когда, числа в строках равны
 		return false;
 	}
-	//РїСЂРѕРІРµСЂРєР° РЅР° Р±РѕР»СЊС€РµСЃС‚СЊ/СЂР°РІРЅРѕСЃС‚СЊ
+	//проверка на большесть/равность
 	bool operator>=(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--) {
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° Р±РѕР»СЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ true
+			//если элемент массива больше , возвращает true
 			if (ChangeChar(nullArray[i]) > ChangeChar(number.nullArray[i]))
 				return true;
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° РјРµРЅСЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ false
+			//если элемент массива меньше , возвращает false
 			if (ChangeChar(nullArray[i]) < ChangeChar(number.nullArray[i]))
 				return false;
 		}
@@ -271,7 +269,7 @@ public:
 
 	friend ostream& operator<<(ostream& os, const LongNumber &number);
 };
-//РѕРїРµСЂР°С‚РѕСЂ РІС‹РІРѕРґР°
+//оператор вывода
 ostream& operator<<(ostream& os, const LongNumber &number) {
 	bool trigger = false;
 	for (int i = 0; i < 20; i++) {
@@ -286,8 +284,8 @@ ostream& operator<<(ostream& os, const LongNumber &number) {
 }
 
 int main() {
-	LongNumber t1 = "100";
-	LongNumber t2 = "2";
+	LongNumber t1 = "500000";
+	LongNumber t2 = "5";
 	LongNumber t;
 
 	t = t1 + t2;
@@ -301,6 +299,6 @@ int main() {
 	t = t1 % t2;
 	cout << t1 << " % " << t2 << " = " << t << endl << endl;
 
-	_getch();
+	system("pause");
 	return 0;
 }
