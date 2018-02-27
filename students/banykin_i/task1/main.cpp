@@ -1,10 +1,12 @@
 #include <iostream>
 #include <string>
+#include <conio.h>
 
 using namespace std;
 
 class LongNumber {
 	char nullArray[20];
+	bool longChecker;
 private:
 	//заполняет массив нулями
 	void ZeroArray() {
@@ -18,8 +20,8 @@ private:
 		nullArray[0] = '0';
 	}
 	//ф-ция преобразовывает числа типа char в числа типа int
-	int ChangeChar(char elementChar) {
-		switch (elementChar) {
+	int ChangeChar(char number) {
+		switch (number) {
 		case '1': return 1;
 		case '2': return 2;
 		case '3': return 3;
@@ -52,16 +54,13 @@ public:
 		ZeroArray();
 	}
 	//идентификация элементов строки, занесение каждого элемента в ячейку массива
-	LongNumber(char c[])
-	{
-		int sLength = strlen(c);
+	LongNumber(char number[]) {
+		int sLength = strlen(number);
 		ZeroArray();
 
-		if (sLength <= 20)
-		{
-			for (int i = 0, j = sLength - 1; i < 20 && c[j] != '\0'; i++, j--)
-			{
-				nullArray[i] = c[j];
+		if (sLength <= 20) {
+			for (int i = 0, j = sLength - 1; i < 20 && number[j] != '\0'; i++, j--) {
+				nullArray[i] = number[j];
 			}
 		}
 	}
@@ -73,7 +72,7 @@ public:
 		for (int i = 0; i < 20; i++) {
 			temp = (ChangeChar(nullArray[i])) + (ChangeChar(number.nullArray[i])) + temp;//передаем в переменную результат сложения ячеек двух массивов 
 			remainder = temp % 10;//вытаскивает последнюю цифру из числа
-			//проверка остатка на отрицательность
+								  //проверка остатка на отрицательность
 			if (remainder < 0) {
 				remainder += 10;
 				temp -= 10;
@@ -85,13 +84,15 @@ public:
 	}
 	//вычитание
 	LongNumber operator-(const LongNumber &number) {
+		if (*this < number)
+			return "Negative";
 		LongNumber tmp;
 		int temp = 0;
 		int remainder;
 		for (int i = 0; i < 20; i++) {
 			temp = (ChangeChar(nullArray[i])) - (ChangeChar(number.nullArray[i])) + temp;//передаем в переменную результат вычитания ячеек двух массивов 
 			remainder = temp % 10;//вытаскивает последнюю цифру из числа
-			//проверка остатка на отрицательность
+								  //проверка остатка на отрицательность
 			if (remainder < 0) {
 				remainder += 10;
 				temp -= 10;
@@ -122,85 +123,83 @@ public:
 		return tmp;//возвращаем результат
 	}
 	//деление
-	LongNumber operator/(LongNumber &number) {
-		if (number == (LongNumber)"0")
-			throw;
+	LongNumber operator/(const LongNumber &number) {
 
+		int i = 20;
 		LongNumber tmp;
-		LongNumber dividend(*this);//делимое
-		LongNumber dividendPart;
-		LongNumber divider(number);//делитель
+		LongNumber dividendPart;//часть от деления 
+		LongNumber divider(number);// делитель 
+		LongNumber dividend(*this);// делимое 
+		if (divider == (LongNumber)"0") {
+			return 0;
+		}
 
-		int size = 20;
 
-		bool begin = false;
-		//выполняем деление пока размер массива делимого больше нуля
+		bool started = false;
+
 		do {
-			//пока часть делимого меньше делителя
-			while (dividendPart < divider && size--> 0) {
-				dividendPart.UpRank();//повышаем разряд части от делимого
-				dividendPart.nullArray[0] = dividend.nullArray[size];//даем первой ячейке части делимого последний элемнт делимого
-				if (dividend.nullArray[size] != '0')//начинаем делить , когда наткнулись на число
-					begin = true;
-				//делим
-				if ((dividendPart < divider) && begin && dividend.nullArray[size] != '0')
-					tmp.UpRank();
+			while (dividendPart < divider && i-- > 0) {
+				dividendPart.UpRank();
+				dividendPart.nullArray[0] = dividend.nullArray[i];
+				if (dividend.nullArray[i] != '0')
+					started = true;
+
+				if (dividendPart < divider && started && i > 0)
+					if (dividend.nullArray[i] != '0' || (dividend.nullArray[i] == '0' && (i > 0)))
+						tmp.UpRank();
 			}
-			//записываем результат
 			while (dividendPart >= divider) {
 				dividendPart = dividendPart - divider;
 				tmp = tmp + "1";
 			}
-			//прерываем цикл когда делимое закончилось
-			if (size <= 0)
+			if (i <= 0)
 				break;
 
 			tmp.UpRank();
-		} while (size > 0);
-
-		return tmp;//возвращаем результат
+		} while (i > 0);
+		return tmp;
 	}
 	//деление с остатком
-	LongNumber operator%(LongNumber &number) {
-		if (number == (LongNumber)"0")
-			throw;
+	LongNumber operator%(const LongNumber &number) {
 
+		int i = 20;
 		LongNumber tmp;
-		LongNumber dividend(*this);//делимое
-		LongNumber dividendPart;
-		LongNumber divider(number);//делитель
+		LongNumber dividendPart;//Промежуточное произведение 
+								//Работаем с модулями чисел 
+		LongNumber divider(number);// Делитель 
+		LongNumber dividend(*this);// Делимое 
 
-		int size = 20;
+		if (divider == (LongNumber)"0") {
+			throw "Деление нан ноль";
+			return 0;
+		}
 
-		bool begin = false;
-		//выполняем деление пока размер массива делимого больше нуля
+		bool started = false;
+
 		do {
-			//пока часть делимого меньше делителя
-			while (dividendPart < divider && size--> 0) {
-				dividendPart.UpRank();//повышаем разряд части от делимого
-				dividendPart.nullArray[0] = dividend.nullArray[size];//даем первой ячейке части делимого последний элемнт делимого
-				if (dividend.nullArray[size] != '0')//начинаем делить , когда наткнулись на число
-					begin = true;
-				//делим
-				if ((dividendPart < divider) && begin && dividend.nullArray[size] != '0')
-					tmp.UpRank();
+			while (dividendPart < divider && i-- > 0) {
+				dividendPart.UpRank();
+				dividendPart.nullArray[0] = dividend.nullArray[i];
+				if (dividend.nullArray[i] != '0')
+					started = true;
+
+				if (dividendPart < divider && started && i > 0)
+					if (dividend.nullArray[i] != '0' || (dividend.nullArray[i] == '0' && (i > 0)))
+						tmp.UpRank();
 			}
-			//записываем результат
 			while (dividendPart >= divider) {
 				dividendPart = dividendPart - divider;
 				tmp = tmp + "1";
 			}
-			//прерываем цикл когда делимое закончилось
-			if (size <= 0)
+			if (i <= 0)
 				break;
 
 			tmp.UpRank();
-		} while (size > 0);
-
-		tmp = (*this) - tmp * number;//остаток
-
-		return tmp;//возвращаем результат
+		} while (i > 0);
+		tmp = (*this) - tmp * number;
+		return tmp;
 	}
+
 	//оператор присваивания		
 	LongNumber operator=(const LongNumber &number) {
 		for (int i = 20; i >= 0; i--)
@@ -276,8 +275,6 @@ public:
 		}
 	}
 
-	//вывод ответа
-
 	friend ostream& operator<<(ostream& os, const LongNumber &number);
 };
 //оператор вывода
@@ -295,11 +292,21 @@ ostream& operator<<(ostream& os, const LongNumber &number) {
 }
 
 int main() {
-	LongNumber c;
-	LongNumber t1 = "140";
-	LongNumber t2 = "0";
-	LongNumber t(t1 % t2);
-	cout << t << endl;
-	system("pause");
+	LongNumber t1 = "4";
+	LongNumber t2 = "11";
+	LongNumber t;
+
+	t = t1 + t2;
+	cout << t1 << " + " << t2 << " = " << t << endl << endl;
+	t = t1 - t2;
+	cout << t1 << " - " << t2 << " = " << t << endl << endl;
+	t = t1 * t2;
+	cout << t1 << " * " << t2 << " = " << t << endl << endl;
+	t = t1 / t2;
+	cout << t1 << " / " << t2 << " = " << t << endl << endl;
+	t = t1 % t2;
+	cout << t1 << " % " << t2 << " = " << t << endl << endl;
+
+	_getch();
 	return 0;
 }
