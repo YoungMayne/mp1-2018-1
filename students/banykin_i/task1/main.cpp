@@ -72,7 +72,6 @@ public:
 		for (int i = 0; i < 20; i++) {
 			temp = (ChangeChar(nullArray[i])) + (ChangeChar(number.nullArray[i])) + temp;//передаем в переменную результат сложения ячеек двух массивов 
 			remainder = temp % 10;//вытаскивает последнюю цифру из числа
-								  //проверка остатка на отрицательность
 			if (remainder < 0) {
 				remainder += 10;
 				temp -= 10;
@@ -92,7 +91,6 @@ public:
 		for (int i = 0; i < 20; i++) {
 			temp = (ChangeChar(nullArray[i])) - (ChangeChar(number.nullArray[i])) + temp;//передаем в переменную результат вычитания ячеек двух массивов 
 			remainder = temp % 10;//вытаскивает последнюю цифру из числа
-								  //проверка остатка на отрицательность
 			if (remainder < 0) {
 				remainder += 10;
 				temp -= 10;
@@ -130,12 +128,11 @@ public:
 		LongNumber dividendPart;//часть от деления 
 		LongNumber divider(number);// делитель 
 		LongNumber dividend(*this);// делимое 
+		bool started = false;
+
 		if (divider == (LongNumber)"0") {
 			return 0;
 		}
-
-
-		bool started = false;
 
 		do {
 			while (dividendPart < divider && i-- > 0) {
@@ -165,16 +162,13 @@ public:
 		int i = 20;
 		LongNumber tmp;
 		LongNumber dividendPart;//Промежуточное произведение 
-								//Работаем с модулями чисел 
 		LongNumber divider(number);// Делитель 
 		LongNumber dividend(*this);// Делимое 
+		bool started = false;
 
 		if (divider == (LongNumber)"0") {
-			throw "Деление нан ноль";
-			return 0;
+			throw 0;
 		}
-
-		bool started = false;
 
 		do {
 			while (dividendPart < divider && i-- > 0) {
@@ -292,8 +286,8 @@ ostream& operator<<(ostream& os, const LongNumber &number) {
 }
 
 int main() {
-	LongNumber t1 = "4";
-	LongNumber t2 = "11";
+	LongNumber t1 = "100";
+	LongNumber t2 = "2";
 	LongNumber t;
 
 	t = t1 + t2;
