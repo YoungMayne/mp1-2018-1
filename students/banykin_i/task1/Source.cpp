@@ -152,6 +152,7 @@ public:
 
 			tmp.UpRank();
 		} while (i > 0);
+
 		return tmp;
 	}
 	//деление с остатком
@@ -284,8 +285,8 @@ ostream& operator<<(ostream& os, const LongNumber &number) {
 }
 
 int main() {
-	LongNumber t1 = "500000";
-	LongNumber t2 = "2";
+	LongNumber t1 = "100";
+	LongNumber t2 = "100";
 	LongNumber t;
 
 	t = t1 + t2;
