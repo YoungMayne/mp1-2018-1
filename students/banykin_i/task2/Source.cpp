@@ -12,41 +12,41 @@ private:
 	int dim;
 public:
 	vector() {}
-	//сложение
+	//СЃР»РѕР¶РµРЅРёРµ
 	vector operator+(vector number) {
 		vector tmp;
 		tmp.dim = dim;
 		if (dim != number.dim)
 			throw;
 		for (int i = 0; i < dim; i++)
-			tmp.Coordinates[i] = Coordinates[i] + number.GetCoordinate(i);//складываем каждый элемент одного массива с каждым элементом другого
+			tmp.Coordinates[i] = Coordinates[i] + number.GetCoordinate(i);//СЃРєР»Р°РґС‹РІР°РµРј РєР°Р¶РґС‹Р№ СЌР»РµРјРµРЅС‚ РѕРґРЅРѕРіРѕ РјР°СЃСЃРёРІР° СЃ РєР°Р¶РґС‹Рј СЌР»РµРјРµРЅС‚РѕРј РґСЂСѓРіРѕРіРѕ
 
 		return tmp;
 	}
-	//вычитание
+	//РІС‹С‡РёС‚Р°РЅРёРµ
 	vector operator-(const vector number) {
 		vector tmp;
 		tmp.dim = dim;
 		if (dim != number.dim)
 			throw;
 		for (int i = 0; i < dim; i++)
-			tmp.Coordinates[i] = Coordinates[i] - number.Coordinates[i];//складываем каждый элемент одного массива с каждым элементом другого
+			tmp.Coordinates[i] = Coordinates[i] - number.Coordinates[i];//СЃРєР»Р°РґС‹РІР°РµРј РєР°Р¶РґС‹Р№ СЌР»РµРјРµРЅС‚ РѕРґРЅРѕРіРѕ РјР°СЃСЃРёРІР° СЃ РєР°Р¶РґС‹Рј СЌР»РµРјРµРЅС‚РѕРј РґСЂСѓРіРѕРіРѕ
 
 		return tmp;
 	}
 
-	//скалярное умножени
+	//СЃРєР°Р»СЏСЂРЅРѕРµ СѓРјРЅРѕР¶РµРЅРё
 	int Scalar(const vector number) {
 		int tmp = 0;
 		if (dim != number.dim)
 			throw;
 		for (int i = 0; i < dim; i++) {
-			tmp += Coordinates[i] * number.Coordinates[i];//умножаем и складываем
+			tmp += Coordinates[i] * number.Coordinates[i];//СѓРјРЅРѕР¶Р°РµРј Рё СЃРєР»Р°РґС‹РІР°РµРј
 		}
 
 		return tmp;
 	}
-	//векторное произведение для 3х мерного пространства
+	//РІРµРєС‚РѕСЂРЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ РґР»СЏ 3С… РјРµСЂРЅРѕРіРѕ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР°
 	vector Vector(const vector number) {
 		if (dim == 3) {
 			vector tmp;
@@ -59,35 +59,35 @@ public:
 		}
 	}
 
-	//вычисление длины
+	//РІС‹С‡РёСЃР»РµРЅРёРµ РґР»РёРЅС‹
 	float GetLength() {
 		float tmp = 0;
 
 		for (int i = 0; i < dim; i++)
-			tmp += Coordinates[i] * Coordinates[i];// элементы массива возводятся в квадрат и складываются 
+			tmp += Coordinates[i] * Coordinates[i];// СЌР»РµРјРµРЅС‚С‹ РјР°СЃСЃРёРІР° РІРѕР·РІРѕРґСЏС‚СЃСЏ РІ РєРІР°РґСЂР°С‚ Рё СЃРєР»Р°РґС‹РІР°СЋС‚СЃСЏ 
 
-		return sqrt(tmp);//результат
+		return sqrt(tmp);//СЂРµР·СѓР»СЊС‚Р°С‚
 	}
-	//ручное изменение размерности
+	//СЂСѓС‡РЅРѕРµ РёР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё
 	void SetDim(int i) {
 		dim = i;
 	}
-	//получение размерности
+	//РїРѕР»СѓС‡РµРЅРёРµ СЂР°Р·РјРµСЂРЅРѕСЃС‚Рё
 	int GetDim() {
 		return dim;
 	}
-	//изменяет выбраную координату вектора
+	//РёР·РјРµРЅСЏРµС‚ РІС‹Р±СЂР°РЅСѓСЋ РєРѕРѕСЂРґРёРЅР°С‚Сѓ РІРµРєС‚РѕСЂР°
 	void SetCoordinate(int i, int value) {
 		Coordinates[i] = value;
 	}
-	//получает значение выбранной координаты
+	//РїРѕР»СѓС‡Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ РІС‹Р±СЂР°РЅРЅРѕР№ РєРѕРѕСЂРґРёРЅР°С‚С‹
 	int GetCoordinate(int i) {
 		return Coordinates[i];
 	}
 
 	friend ostream& operator<<(ostream& os, vector &c);
 };
-//вывод класса в консоль
+//РІС‹РІРѕРґ РєР»Р°СЃСЃР° РІ РєРѕРЅСЃРѕР»СЊ
 ostream& operator<<(ostream& os, vector &number) {
 	os << '(';
 	for (int i = 0; i < number.dim; i++) {
