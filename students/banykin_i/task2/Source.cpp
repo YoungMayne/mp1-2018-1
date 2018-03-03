@@ -69,7 +69,7 @@ public:
 		return sqrt(tmp);//результат
 	}
 	//ручное изменение размерности
-	void SetDim(int &i) {
+	void SetDim(int i) {
 		dim = i;
 	}
 	//получение размерности
@@ -77,11 +77,11 @@ public:
 		return dim;
 	}
 	//изменяет выбраную координату вектора
-	void SetCoordinate(int &i, int &value) {
+	void SetCoordinate(int i, int value) {
 		Coordinates[i] = value;
 	}
 	//получает значение выбранной координаты
-	int GetCoordinate(int &i) {
+	int GetCoordinate(int i) {
 		return Coordinates[i];
 	}
 
