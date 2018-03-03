@@ -13,7 +13,7 @@ private:
 public:
 	vector() {}
 	//сложение
-	vector operator+(const vector number) {
+	vector operator+(const vector &number) {
 		vector tmp;
 		tmp.dim = dim;
 		if (dim != number.dim)
@@ -24,7 +24,7 @@ public:
 		return tmp;
 	}
 	//вычитание
-	vector operator-(const vector number) {
+	vector operator-(const vector &number) {
 		vector tmp;
 		tmp.dim = dim;
 		if (dim != number.dim)
@@ -47,7 +47,7 @@ public:
 		return tmp;
 	}
 	//векторное произведение для 3х мерного пространства
-	vector Vector(const vector number) {
+	vector Vector(const vector &number) {
 		if (dim == 3) {
 			vector tmp;
 			tmp.dim = dim;
