@@ -9,17 +9,17 @@ class vector {
 
 private:
 	int Coordinates[size];
-	int dim;
+	int dim = 0;
 public:
 	vector() {}
 	//сложение
-	vector operator+(vector number) {
+	vector operator+(const vector number) {
 		vector tmp;
 		tmp.dim = dim;
 		if (dim != number.dim)
 			throw;
 		for (int i = 0; i < dim; i++)
-			tmp.Coordinates[i] = Coordinates[i] + number.GetCoordinate(i);//складываем каждый элемент одного массива с каждым элементом другого
+			tmp.Coordinates[i] = Coordinates[i] + number.Coordinates[i];//складываем каждый элемент одного массива с каждым элементом другого
 
 		return tmp;
 	}
@@ -133,7 +133,7 @@ int main() {
 	t = t1 - t2; cout << t1 << " - " << t2 << " = " << t << endl;
 	cout << t1 << " * " << t2 << " = " << t1.Scalar(t2) << endl;
 	if (n == 3)
-		cout << t1 << " vector work " << t2 << " = " << t1.Scalar(t2) << endl;
+		cout << t1 << " vector work " << t2 << " = " << t1.Vector(t2) << endl;
 
 	system("pause");
 
