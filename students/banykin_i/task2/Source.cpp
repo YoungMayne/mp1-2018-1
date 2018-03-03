@@ -36,7 +36,7 @@ public:
 	}
 
 	//скалярное умножени
-	int Scalar(const vector number) {
+	int Scalar(const vector &number) {
 		int tmp = 0;
 		if (dim != number.dim)
 			throw;
@@ -69,7 +69,7 @@ public:
 		return sqrt(tmp);//результат
 	}
 	//ручное изменение размерности
-	void SetDim(int i) {
+	void SetDim(int &i) {
 		dim = i;
 	}
 	//получение размерности
@@ -77,18 +77,18 @@ public:
 		return dim;
 	}
 	//изменяет выбраную координату вектора
-	void SetCoordinate(int i, int value) {
+	void SetCoordinate(int &i, int &value) {
 		Coordinates[i] = value;
 	}
 	//получает значение выбранной координаты
-	int GetCoordinate(int i) {
+	int GetCoordinate(int &i) {
 		return Coordinates[i];
 	}
 
-	friend ostream& operator<<(ostream& os, vector &c);
+	friend ostream& operator<<(ostream	&os, vector &c);
 };
 //вывод класса в консоль
-ostream& operator<<(ostream& os, vector &number) {
+ostream& operator<<(ostream	&os, vector &number) {
 	os << '(';
 	for (int i = 0; i < number.dim; i++) {
 		os << number.Coordinates[i];
