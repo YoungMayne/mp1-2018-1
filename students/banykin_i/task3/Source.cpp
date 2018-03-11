@@ -1,19 +1,20 @@
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
+#include <string>
 
-#define size 10
+#define size 100
 
 using namespace std;
 
 class menu {
 
-	const char* menuFunctions[size][size];//основной массив с именами и результатами
-	const char* changer = ">> ";//ползунок
+	string menuFunctions[size];//основной массив с именами и результатами
+	string changer = ">> ";//ползунок
 	int counter = 0;
 	int button = 0;
 	int amount = 0;//количество пунктов в меню
-	bool isPressed = false;
+	
 
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -42,14 +43,29 @@ class menu {
 	};//выбор цвета
 
 private:
+	
+	bool isPressed = false;
+
 	//инициализация 
 	void initial() {
-
+	
 		for (int i = 0; i < size; i++)
-			menuFunctions[0][i] = "<...>";
+			menuFunctions[i] = "<...>";
+	}
 
-		for (int i = 0; i < size; i++)
-			menuFunctions[i][0] = "<...>";
+	void Control() {
+
+		button = _getch();
+
+		if (button == 80)
+			counter++;
+		if (button == 72)
+			counter--;
+		if (button == 13)
+			isPressed = true;
+
+		counter = (counter + amount + 1) % (amount + 1);
+
 	}
 
 public:
@@ -59,7 +75,7 @@ public:
 	}
 
 	//задает вид ползунка
-	void SetChanger(const char* type) {
+	void SetChanger(string type) {
 
 		changer = type;
 	}
@@ -77,30 +93,23 @@ public:
 	}
 
 	//дает имя ячейке
-	void SetName(int number, const char* name) {
+	void SetName(int number, string name) {
 
-		menuFunctions[number][0] = name;
+		menuFunctions[number] = name;
 
 		if (amount < number)
 			amount = number;
 	}
 
 	//возвращает название функции
-	const char* GetNameOfFunction(int number) {
+	string GetName(int number) {
 
-		return menuFunctions[number][0];
+		return menuFunctions[number];
 	}
 
-	//дает ячейке значение при ее открытии
-	void SetMean(int number, const char* string) {
+	int GetNumber() {
 
-		menuFunctions[0][number + 1] = string;
-	}
-
-	//выдает значение при открытии
-	const char* GetMeans(int number) {
-
-		return menuFunctions[0][number + 1];
+		return counter + 1;
 	}
 
 	//задает координаты
@@ -126,12 +135,6 @@ public:
 		counter = value - 1;
 	}
 
-	//возвращает позицию
-	int GetChangerPozition() {
-
-		return counter;
-	}
-
 	//отключение мигающего "_" в консоли
 	void DisableShowConsoleCursor() {
 
@@ -142,19 +145,12 @@ public:
 		SetConsoleCursorInfo(hConsole, &showCursor);
 	}
 
-	//главная функция управления
-	void Control() {
 
-		button = _getch();
+	bool isChoosen(int number) {
 
-		if (button == 80)
-			counter++;
-		if (button == 72)
-			counter--;
-		if (button == 13)
-			isPressed = true;
-
-		counter = (counter + amount + 1) % (amount + 1);
+		if (number == counter && isPressed)
+			return true;
+		return false;
 	}
 
 	//настройка цвета фона и текста
@@ -164,7 +160,7 @@ public:
 	}
 
 	//вывод на экран с учетом координат
-	void Print() {
+	void Start() {
 
 		for (int i = 0; i <= amount; i++) {
 
@@ -172,12 +168,12 @@ public:
 
 			if (i == counter) {
 
-				cout << changer << menuFunctions[i][0] << endl;
+				cout << changer << menuFunctions[i] << endl;
 			}
 
 			else {
 
-				cout << i + 1 << ". " << menuFunctions[i][0] << endl;
+				cout << i + 1 << ". " << menuFunctions[i] << endl;
 			}
 
 			pozition.Y++;
@@ -185,27 +181,13 @@ public:
 
 		SetConsoleCursorPosition(hConsole, pozition);
 
-		if (isPressed == true) {
-
-			cout << GetMeans(counter);
-			isPressed = false;
-		}
-
 		SCCPbase();
+
+		isPressed = false;
+
+		Control();
 	}
 
-	void Start() {
-
-		DisableShowConsoleCursor();
-
-		do {
-
-			system("cls");
-			Print();
-			Control();
-
-		} while (button != 27);
-	}
 };
 
 int main() {
@@ -214,8 +196,9 @@ int main() {
 
 	menu m;
 
+	m.DisableShowConsoleCursor();
 	m.SetNumberOfFunctions(0); // функция бесполезна т.к. переменная числа функций меняется динамически при объявлении нового элемента меню
-	m.SetCoordinates(4, 5);
+	m.SetCoordinates(0, 0);
 	m.SetChangerPozition(1);
 	m.SetColor(0, 2);
 	m.SetChanger(">> ");
@@ -223,23 +206,32 @@ int main() {
 	//объявление имен пунктов меню
 	m.SetName(0, "Богомол");
 	m.SetName(1, "Зебра");
-	//	m.SetName(2, "Дракон");
-	m.SetName(3, "Слоны");
+	m.SetName(2, "Дракон");
+	//m.SetName(3, "Слоны");
 	m.SetName(4, "Гепард");
 	m.SetName(5, "Единорог");
-	m.SetName(6, " ");
+	m.SetName(6, "");
 
 	//объявление результата пункта
-	m.SetMean(0, " Насекомое из семейства настоящих богомолов отряда богомоловых. Крупное хищное насекомое с приспособленными для хватания пищи передними конечностями. Достигает в длину 42—52 мм (самец) или 48—75 мм (самка). Наиболее крупный и самый распространённый вид богомолов в Европе.");
-	m.SetMean(1, " Подрод рода лошади, включающий виды бурчеллова зебра, зебра Греви и горная зебра. Гибридные формы между зебрами и домашними лошадьми называют зеброидами, между зебрами и ослами — зебрулами. Зебры живут маленькими группами, состоящими из самок с детёнышами и одного жеребца.");
-	m.SetMean(2, " Собирательное название, объединяющее ряд мифологических и фантастических существ. Дракон связан с христианским культом святого Георгия и получил широкое распространение в европейском религиозном искусстве.");
-	m.SetMean(3, " Семейство млекопитающих отряда хоботных. В настоящее время к этому семейству относятся наиболее крупные наземные млекопитающие. Cамые крупные наземные животные на Земле. Обитают они в Юго-Восточной Азии и Африке в тропических лесах и саваннах.");
-	m.SetMean(4, " Хищное млекопитающее семейства кошачьих, обитает в большинстве стран Африки, а также на Ближнем Востоке. Это единственный современный сохранившийся представитель рода Acinonyx. Быстрейший из всех наземных млекопитающих: за 3 секунды может развивать скорость до 110 км/ч");
-	m.SetMean(5, " Мифическое существо, символизирует целомудрие, в широком смысле духовную чистоту и искания. Представляют его в виде коня c одним рогом, выходящим изо лба.");
+	//m.SetMean(0, " Насекомое из семейства настоящих богомолов отряда богомоловых. Крупное хищное насекомое с приспособленными для хватания пищи передними конечностями. Достигает в длину 42—52 мм (самец) или 48—75 мм (самка). Наиболее крупный и самый распространённый вид богомолов в Европе.");
+	//m.SetMean(1, " Подрод рода лошади, включающий виды бурчеллова зебра, зебра Греви и горная зебра. Гибридные формы между зебрами и домашними лошадьми называют зеброидами, между зебрами и ослами — зебрулами. Зебры живут маленькими группами, состоящими из самок с детёнышами и одного жеребца.");
+	//m.SetMean(2, " Собирательное название, объединяющее ряд мифологических и фантастических существ. Дракон связан с христианским культом святого Георгия и получил широкое распространение в европейском религиозном искусстве.");
+	//m.SetMean(3, " Семейство млекопитающих отряда хоботных. В настоящее время к этому семейству относятся наиболее крупные наземные млекопитающие. Cамые крупные наземные животные на Земле. Обитают они в Юго-Восточной Азии и Африке в тропических лесах и саваннах.");
+	//m.SetMean(4, " Хищное млекопитающее семейства кошачьих, обитает в большинстве стран Африки, а также на Ближнем Востоке. Это единственный современный сохранившийся представитель рода Acinonyx. Быстрейший из всех наземных млекопитающих: за 3 секунды может развивать скорость до 110 км/ч");
+	//m.SetMean(5, " Мифическое существо, символизирует целомудрие, в широком смысле духовную чистоту и искания. Представляют его в виде коня c одним рогом, выходящим изо лба.");
 	//	m.SetMean(6, "");
 
-	//главная функция. Демонстрация работоспособности класса
-	m.Start();
+	do {
+
+		system("cls");
+		m.Start();
+
+		for (int i = 0; i <= m.GetNumberOfFunctions(); i++) {
+
+			if (m.isChoosen(i))
+				cout << m.GetNumber() << endl << m.GetName(i);
+		}
+	} while (1);
 
 	return 0;
 }
