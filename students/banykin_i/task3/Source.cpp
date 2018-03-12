@@ -96,18 +96,10 @@ public:
 		showCursor.bVisible = false;
 		SetConsoleCursorInfo(hConsole, &showCursor);
 	}
-	//проверка на нажатость конкретной клавиши
-	bool isChoosen() {
+	//возвращает значение выбранного пункта меню
+	int Choosen() {
 		if (isPressed)
-			return true;
-		return false;
-	}
-	//проверка на нажатие конкретной кнопки
-	bool isChoosen(int number) {
-		if (number - 1 == counter && isPressed)
-			return true;
-		return false;
-
+			return counter + 1;
 	}
 	//настройка цвета фона и текста
 	void SetColor(int bg, int txt) {
@@ -163,10 +155,8 @@ int main() {
 		system("cls");
 		m.Start();
 
-		if (m.isChoosen())
-			cout << m.GetNumber(); 
-		if (m.isChoosen(4))
-			cout << "Nice";
+		cout << m.Choosen();
+
 	} while (1);
 
 	return 0;
