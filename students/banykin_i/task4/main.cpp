@@ -6,7 +6,7 @@
 #define size 8761
 using namespace std;
 
-//функция не относящаяся к заданию, нужна для заполнения массива
+//С„СѓРЅРєС†РёВ¤ РЅРµ РѕС‚РЅРѕСЃВ¤С‰Р°В¤СЃВ¤ Рє Р·Р°РґР°РЅРёСЋ, РЅСѓР¶РЅР° РґР»В¤ Р·Р°РїРѕР»РЅРµРЅРёВ¤ РјР°СЃСЃРёРІР°
 string Month(int number) {
 	switch (number) {
 	case 0: return "january"; break;
@@ -37,7 +37,7 @@ class Temperature {
 		int temp;
 	}temp[size] = {};
 private:
-	//переводит дату в часы
+	//РїРµСЂРµРІРѕРґРёС‚ РґР°С‚Сѓ РІ С‡Р°СЃС‹
 	int Conventer(int _hour, int _day, string _month) {
 		if (_month == "january")
 			return  (_day - 1) * 24 + _hour;
@@ -64,7 +64,7 @@ private:
 		if (_month == "december")
 			return (_day - 1) * 24 + 334 * 24 + _hour;
 	}
-	//переводит строчное число в число integer
+	//РїРµСЂРµРІРѕРґРёС‚ СЃС‚СЂРѕС‡РЅРѕРµ С‡РёСЃР»Рѕ РІ С‡РёСЃР»Рѕ integer
 	int Number(char number) {
 		switch (number) {
 		case '0': return 0;
@@ -80,7 +80,7 @@ private:
 		}
 	}
 public:
-	//задать температуру выбраного числа
+	//Р·Р°РґР°С‚СЊ С‚РµРјРїРµСЂР°С‚СѓСЂСѓ РІС‹Р±СЂР°РЅРѕРіРѕ С‡РёСЃР»Р°
 	void SetTemp(int _hour, int _day, string _month, int _year, int _temp) {
 		temp[Conventer(_hour, _day, _month)].date.day = _day;
 		temp[Conventer(_hour, _day, _month)].date.month = _month;
@@ -88,7 +88,7 @@ public:
 		temp[Conventer(_hour, _day, _month)].date.hour = _hour;
 		temp[Conventer(_hour, _day, _month)].temp = _temp;
 	}
-	//возвращает последнее число месяца
+	//РІРѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃР»РµРґРЅРµРµ С‡РёСЃР»Рѕ РјРµСЃВ¤С†Р°
 	int ReturnMaxDay(string _month) {
 		if (_month == "january")
 			return 31;
@@ -115,11 +115,11 @@ public:
 		if (_month == "december")
 			return 31;
 	}
-	//получить темпертуру выбранного числа
+	//РїРѕР»СѓС‡РёС‚СЊ С‚РµРјРїРµСЂС‚СѓСЂСѓ РІС‹Р±СЂР°РЅРЅРѕРіРѕ С‡РёСЃР»Р°
 	int GetTemp(int _hour, int _day, string _month) {
 		return temp[Conventer(_hour, _day, _month)].temp;
 	}
-	//вывести весь массив в консоль
+	//РІС‹РІРµСЃС‚Рё РІРµСЃСЊ РјР°СЃСЃРёРІ РІ РєРѕРЅСЃРѕР»СЊ
 	void Print() {
 		for (int i = 0; i < size; i++) {
 			if (temp[i].date.day == 0)
@@ -128,11 +128,11 @@ public:
 				cout << i << " " << temp[i].date.day << "d " << temp[i].date.month << " " << temp[i].date.year << "y " << temp[i].date.hour << "h : " << temp[i].temp << endl;
 		}
 	}
-	//вывести определенную ячейку в консоль
+	//РІС‹РІРµСЃС‚Рё РѕРїСЂРµРґРµР»РµРЅРЅСѓСЋ В¤С‡РµР№РєСѓ РІ РєРѕРЅСЃРѕР»СЊ
 	void Print(int _hour, int _day, string _month) {
 		cout << temp[Conventer(_hour, _day, _month)].date.day << "d " << temp[Conventer(_hour, _day, _month)].date.month << " " << temp[Conventer(_hour, _day, _month)].date.year << "y " << temp[Conventer(_hour, _day, _month)].date.hour << "h : " << temp[Conventer(_hour, _day, _month)].temp << endl;
 	}
-	//средняя температура от выбранной даты до выбранной даты
+	//СЃСЂРµРґРЅВ¤В¤ С‚РµРјРїРµСЂР°С‚СѓСЂР° РѕС‚ РІС‹Р±СЂР°РЅРЅРѕР№ РґР°С‚С‹ РґРѕ РІС‹Р±СЂР°РЅРЅРѕР№ РґР°С‚С‹
 	int AvgTemp(int _hour1, int _day1, string _month1, int _hour2, int _day2, string _month2) {
 		int tmp = 0;
 		int count = 0;
@@ -146,7 +146,7 @@ public:
 		}
 		return tmp / count;
 	}
-	//средняя температура месяца
+	//СЃСЂРµРґРЅВ¤В¤ С‚РµРјРїРµСЂР°С‚СѓСЂР° РјРµСЃВ¤С†Р°
 	int AvgTemp(string _month) {
 		int tmp = 0;
 		int count = 0;
@@ -160,7 +160,7 @@ public:
 		}
 		return tmp / count;
 	}
-	//средняя температура всего массива
+	//СЃСЂРµРґРЅВ¤В¤ С‚РµРјРїРµСЂР°С‚СѓСЂР° РІСЃРµРіРѕ РјР°СЃСЃРёРІР°
 	int AvgTemp() {
 		int tmp = 0;
 		int count = 0;
@@ -174,7 +174,7 @@ public:
 		}
 		return tmp / count;
 	}
-	//среднаяя температура дня/ночи месяца
+	//СЃСЂРµРґРЅР°В¤В¤ С‚РµРјРїРµСЂР°С‚СѓСЂР° РґРЅВ¤/РЅРѕС‡Рё РјРµСЃВ¤С†Р°
 	int AvgTemp(string _time, string _month) {
 		int tmp = 0;
 		int count = 0;
@@ -205,7 +205,7 @@ public:
 			return tmp / count;
 		}
 	}
-	//занести данные в текстовый файл
+	//Р·Р°РЅРµСЃС‚Рё РґР°РЅРЅС‹Рµ РІ С‚РµРєСЃС‚РѕРІС‹Р№ С„Р°Р№Р»
 	void InputFile(string _name) {
 		ofstream file(_name);
 		for (int i = 0; i < size; i++) {
@@ -216,7 +216,7 @@ public:
 		}
 		file.close();
 	}
-	//занести данные из текстового файла в массив 
+	//Р·Р°РЅРµСЃС‚Рё РґР°РЅРЅС‹Рµ РёР· С‚РµРєСЃС‚РѕРІРѕРіРѕ С„Р°Р№Р»Р° РІ РјР°СЃСЃРёРІ 
 	void OutputFile(string _name) {
 		int d;
 		char m[15] = {};
@@ -295,7 +295,7 @@ int main() {
 	Temperature t;
 
 	srand(time(NULL));
-	//заполняет массив случайной температурой
+	//Р·Р°РїРѕР»РЅВ¤РµС‚ РјР°СЃСЃРёРІ СЃР»СѓС‡Р°Р№РЅРѕР№ С‚РµРјРїРµСЂР°С‚СѓСЂРѕР№
 	for (int i = 0; i < 12; i++) {
 		for (int j = 1; j <= t.ReturnMaxDay(Month(i)); j++) {
 			for (int k = 0; k < 24; k++) {
