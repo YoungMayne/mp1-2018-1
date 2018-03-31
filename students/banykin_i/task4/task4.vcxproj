@@ -20,6 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="Temperature.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="Temperature.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

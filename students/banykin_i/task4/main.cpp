@@ -1,359 +1,226 @@
+#define CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <string>
 #include <time.h>
 #include <fstream>
 
-#define size 8761
-using namespace std;
+#include "menu.h"
+#include "Temperature.h"
 
-struct Date {
-  int day;
-  string month;
-  int year;
-  int hour;
-}tempStartDate;
-struct Temp {
-  Date date;
-  int temp;
-}temp[size] = {};
-
-
-string Month(int number) {
-  switch (number) {
-  case 0: return "january"; break;
-  case 1: return "february"; break;
-  case 2: return "march"; break;
-  case 3: return "april"; break;
-  case 4: return "may"; break;
-  case 5: return "june"; break;
-  case 6: return "july"; break;
-  case 7: return "august"; break;
-  case 8: return "september"; break;
-  case 9: return "october"; break;
-  case 10: return "november"; break;
-  case 11: return "december"; break;
-  }
+//вместо system("cls") т.к. быстрее работает
+void setcur(int x, int y) {
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-class Temperature {
+//демонстрация работы
+void Print() {
+	Temperature t;
+	menu m;
+	menu M;
 
-  int startDay;
-  string startMonth;
-  int startYear;
-  int startHour;
-private:
-  //переводит дату в часы
-  int Conventer(int _hour, int _day, string _month) {
-    if (_month == "january")
-      return  (_day - 1) * 24 + _hour;
-    if (_month == "february")
-      return (_day - 1) * 24 + 31 * 24 + _hour;
-    if (_month == "march")
-      return (_day - 1) * 24 + 59 * 24 + _hour;
-    if (_month == "april")
-      return (_day - 1) * 24 + 90 * 24 + _hour;
-    if (_month == "may")
-      return (_day - 1) * 24 + 120 * 24 + _hour;
-    if (_month == "june")
-      return (_day - 1) * 24 + 151 * 24 + _hour;
-    if (_month == "july")
-      return (_day - 1) * 24 + 181 * 24 + _hour;
-    if (_month == "august")
-      return (_day - 1) * 24 + 212 * 24 + _hour;
-    if (_month == "september")
-      return (_day - 1) * 24 + 243 * 24 + _hour;
-    if (_month == "october")
-      return (_day - 1) * 24 + 273 * 24 + _hour;
-    if (_month == "november")
-      return (_day - 1) * 24 + 304 * 24 + _hour;
-    if (_month == "december")
-      return (_day - 1) * 24 + 334 * 24 + _hour;
-  }
-  //переводит строчное число в число integer
-  int Number(char number) {
-    switch (number) {
-    case '0': return 0;
-    case '1': return 1;
-    case '2': return 2;
-    case '3': return 3;
-    case '4': return 4;
-    case '5': return 5;
-    case '6': return 6;
-    case '7': return 7;
-    case '8': return 8;
-    case '9': return 9;
-    }
-  }
-  char Symbol(int number) {
-    switch (number) {
-    case 0: return '0';
-    case 1: return '1';
-    case 2: return '2';
-    case 3: return '3';
-    case 4: return '4';
-    case 5: return '5';
-    case 6: return '6';
-    case 7: return '7';
-    case 8: return '8';
-    case 9: return '9';
-    }
-  }
-public:
-  //задать температуру выбраного числа
-  void SetTemp(int _hour, int _day, string _month, int _year, int _temp) {
-    temp[Conventer(_hour, _day, _month)].date.day = _day;
-    temp[Conventer(_hour, _day, _month)].date.month = _month;
-    temp[Conventer(_hour, _day, _month)].date.year = _year;
-    temp[Conventer(_hour, _day, _month)].date.hour = _hour;
-    temp[Conventer(_hour, _day, _month)].temp = _temp;
-  }
-  //установить начальную дату наблюдений
-  void SetStartDate(int _hour, int _day, string _month, int _year) {
-    tempStartDate.day = _day;
-    tempStartDate.month = _month;
-    tempStartDate.year = _year;
-    tempStartDate.hour = _hour;
-  }
-  //функции получения начальной даты наблюдений
-  Date GetStartDate() {
-    return tempStartDate;
-  }
-  //возвращает последнее число мес¤ца
-  int ReturnMaxDay(string _month) {
-    if (_month == "january")
-      return 31;
-    if (_month == "february")
-      return 28;
-    if (_month == "march")
-      return 31;
-    if (_month == "april")
-      return 30;
-    if (_month == "may")
-      return 31;
-    if (_month == "june")
-      return 30;
-    if (_month == "july")
-      return 31;
-    if (_month == "august")
-      return 31;
-    if (_month == "september")
-      return 30;
-    if (_month == "october")
-      return 31;
-    if (_month == "november")
-      return 30;
-    if (_month == "december")
-      return 31;
-  }
-  //получить темпертуру выбранного числа
-  int GetTemp(int _hour, int _day, string _month) {
-    return temp[Conventer(_hour, _day, _month)].temp;
-  }
-  //вывести весь массив в консоль
-  void Print() {
-    for (int i = 0; i < size; i++) {
-      if (temp[i].date.day == 0)
-        continue;
-      else
-        cout << i << " " << temp[i].date.day << "d " << temp[i].date.month << " " << temp[i].date.year << "y " << temp[i].date.hour << "h : " << temp[i].temp << endl;
-    }
-  }
-  //вывести определенную ¤чейку в консоль
-  void Print(int _hour, int _day, string _month) {
-    cout << temp[Conventer(_hour, _day, _month)].date.day << "d " << temp[Conventer(_hour, _day, _month)].date.month << " " << temp[Conventer(_hour, _day, _month)].date.year << "y " << temp[Conventer(_hour, _day, _month)].date.hour << "h : " << temp[Conventer(_hour, _day, _month)].temp << endl;
-  }
-  //средн¤¤ температура от выбранной даты до выбранной даты
-  int AvgTemp(int _hour1, int _day1, string _month1, int _hour2, int _day2, string _month2) {
-    int tmp = 0;
-    int count = 0;
-    for (int i = Conventer(_hour1, _day1, _month1); i < Conventer(_hour2, _day2, _month2); i++) {
-      if (temp[i].date.day == 0)
-        continue;
-      else {
-        tmp += temp[i].temp;
-        count++;
-      }
-    }
-    return tmp / count;
-  }
-  //средн¤¤ температура мес¤ца
-  int AvgTemp(string _month) {
-    int tmp = 0;
-    int count = 0;
-    for (int i = Conventer(0, 1, _month); i < Conventer(23, ReturnMaxDay(_month), _month); i++) {
-      if (temp[i].date.day == 0)
-        continue;
-      else {
-        tmp += temp[i].temp;
-        count++;
-      }
-    }
-    return tmp / count;
-  }
-  //средн¤¤ температура всего массива
-  int AvgTemp() {
-    int tmp = 0;
-    int count = 0;
-    for (int i = 0; i < size; i++) {
-      if (temp[i].date.day == 0)
-        continue;
-      else {
-        tmp += temp[i].temp;
-        count++;
-      }
-    }
-    return tmp / count;
-  }
-  //средна¤¤ температура дн¤/ночи мес¤ца
-  int AvgTemp(string _time, string _month) {
-    int tmp = 0;
-    int count = 0;
-    if (_time == "day") {
-      for (int i = 1; i <= ReturnMaxDay(_month); i++) {
-        for (int j = 12; j <= 23; j++) {
-          if (temp[Conventer(j, i, _month)].date.day == 0)
-            continue;
-          else {
-            tmp += temp[Conventer(j, i, _month)].temp;
-            count++;
-          }
-        }
-      }
-      return tmp / count;
-    }
-    if (_time == "night") {
-      for (int i = 1; i <= ReturnMaxDay(_month); i++) {
-        for (int j = 0; j <= 12; j++) {
-          if (temp[Conventer(j, i, _month)].date.day == 0)
-            continue;
-          else {
-            tmp += temp[Conventer(j, i, _month)].temp;
-            count++;
-          }
-        }
-      }
-      return tmp / count;
-    }
-  }
-  //занести данные в текстовый файл
-  void InputFile(string _name) {
-    ofstream file(_name);
-    for (int i = 0; i < size; i++) {
-      if (temp[i].date.day == 0)
-        continue;
-      else
-        file << temp[i].date.day << "d " << temp[i].date.month << " " << temp[i].date.year << "y " << temp[i].date.hour << "h : " << temp[i].temp << 'C' << '\n';
-    }
-    file.close();
-  }
-  //занести данные из текстового файла в массив 
-  void OutputFile(string _name) {
-    int d;
-    char m[15] = {};
-    int y;
-    int h;
-    int t;
-    int c = 0;
-    int _c = 0;
-    string str;
-    ifstream file(_name);
-    while (getline(file, str)) {
-      for (int i = 0; i < 100; i++) {
-        if (str[i] == 'C') {
-          SetTemp(h, d, m, y, t);
-          break;
-        }
-        if (str[i] == 'd') {
-          d = 0;
-          if (i == 1)
-            d = Number(str[0]);
-          if (i == 2)
-            d = Number(str[0]) * 10 + Number(str[1]);
-        }
+	m.DisableShowConsoleCursor();
 
-        if (str[i] == ' ') {
-          if (i == 2) {
-            for (int o = 0; o < 15; o++) m[o] = {};
-            c = 3;
-            _c = 0;
-            while (str[c] != ' ') {
-              m[_c] = str[c];
-              _c++; c++;
-            }
-          }
-          if (i == 3) {
-            for (int o = 0; o < 15; o++) m[o] = {};
-            c = 4;
-            _c = 0;
-            while (str[c] != ' ') {
-              m[_c] = str[c];
-              _c++; c++;
-            }
-          }
-        }
-        if (str[i] == 'y' && str[i - 1] != 'r' && str[i - 1] != 'a' && str[i - 1] != 'l') {
-          c = i - 4;
-          y = 0;
-          while (str[c] != 'y') {
-            y = y * 10 + Number(str[c]);
-            c++;
-          }
-        }
-        if (str[i] == 'h') {
-          h = 0;
-          if (str[i - 2] == ' ')
-            h = Number(str[i - 1]);
-          if (str[i - 3] == ' ')
-            h = Number(str[i - 2]) * 10 + Number(str[i - 1]);
-        }
-        if (str[i] == ':') {
-          c = i + 2;
-          t = 0;
-          while (str[c] != 'C') {
-            t = t * 10 + Number(str[c]);
-            c++;
-          }
-        }
+	m.SetName(0, "Set Start Day");
+	m.SetName(1, "Get Start Day");
+	m.SetName(2, "Set Temperature");
+	m.SetName(3, "Random Temperature");
+	m.SetName(4, "Get Temperature");
+	m.SetName(5, "Get Averange Temperature");
+	m.SetName(6, "Load to file");
+	m.SetName(7, "Load from file");
+	m.SetName(8, "Print Year Temperature");
+	m.SetName(9, "Exit");
 
-      }
-    }
-    file.close();
-  }
+	M.SetName(0, "Average FromDayToDay Temperature");
+	M.SetName(1, "Average Month Temperature");
+	M.SetName(2, "Average Year Temperature");
+	M.SetName(3, "Average day/night Month Temperature");
+	M.SetName(4, "Back");
 
-  friend ostream& operator<<(ostream& os, const Date& dt);
-};
+	do {
+		setcur(0, 0);
+		m.Start();
+		if (m.Choosen() == 1) {
+			system("cls");
+			int day; int hour; int year; string month;
+			cout << "Enter hour: ";
+			cin >> hour;
+			system("cls");
+			cout << "Enter day: ";
+			cin >> day;
+			system("cls");
+			cout << "Enter month: ";
+			cin >> month;
+			system("cls");
+			cout << "Enter year: ";
+			cin >> year;
+			system("cls");
+			t.SetStartDate(hour, day, month, year);
+			cout << "Deal" << endl;
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 2) {
+			cout << t.GetStartDate().hour << "h " << t.GetStartDate().day << "d " << t.GetStartDate().month << " " << t.GetStartDate().year << "y ";
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 3) {
+			system("cls");
+			int day; int year; int hour; int temp;
+			string month;
+			cout << "Enter hour: ";
+			cin >> hour;
+			system("cls");
+			cout << "Enter day: ";
+			cin >> day;
+			system("cls");
+			cout << "Enter month: ";
+			cin >> month;
+			system("cls");
+			cout << "Enter year: ";
+			cin >> year;
+			system("cls");
+			cout << "Enter temperature: ";
+			cin >> temp;
+			system("cls");
+			t.SetTemp(hour, day, month, year, temp);
+			cout << "Deal" << endl;
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 4) {
+			for (int i = 0; i < 12; i++) {
+				for (int j = 1; j <= t.ReturnMaxDay(t.Month(i)); j++) {
+					for (int k = 0; k < 24; k++) {
+						t.SetTemp(k, j, t.Month(i), 2018, rand() % 50);
+					}
+				}
+			}
+			cout << "Deal" << endl;
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 5) {
+			system("cls");
+			int day; int year; int hour; int temp;
+			string month;
+			cout << "Enter hour: ";
+			cin >> hour;
+			system("cls");
+			cout << "Enter day: ";
+			cin >> day;
+			system("cls");
+			cout << "Enter month: ";
+			cin >> month;
+			system("cls");
+			cout << "Enter year: ";
+			cin >> year;
+			system("cls");
+			cout << t.GetTemp(hour, day, month, year) << endl;
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 6) {
+			system("cls");
+			do {
+				setcur(0, 0);
+				M.Start();
+				if (M.Choosen() == 1) {
+					int hour1; int day1; string month1; int hour2; int day2; string month2;
+					cout << "Enter hour1 and hour2: ";
+					cin >> hour1;
+					cin >> hour2;
+					system("cls");
+					cout << "Enter day1 and day2: ";
+					cin >> day1;
+					cin >> day2;
+					system("cls");
+					cout << "Enter month1 and month2: ";
+					cin >> month1;
+					cin >> month2;
+					system("cls");
+					cout << t.AvgTemp(hour1, day1, month1, hour2, day2, month2) << endl;
+					_getch();
+					system("cls");
+				}
+				if (M.Choosen() == 2) {
+					system("cls");
+					string month;
+					cout << "Enter month: ";
+					cin >> month;
+					system("cls");
+					cout << t.AvgTemp(month) << endl;
+					_getch();
+					system("cls");
+				}
+				if (M.Choosen() == 3) {
+					system("cls");
+					cout << t.AvgTemp() << endl;
+					_getch();
+					system("cls");
+				}
+				if (M.Choosen() == 4) {
+					system("cls");
+					string day;
+					string month;
+					cout << "Enter day/night: ";
+					cin >> day;
+					system("cls");
+					cout << "Enter month: ";
+					cin >> month;
+					system("cls");
+					cout << t.AvgTemp(day, month) << endl;
+					_getch();
+					system("cls");
+				}
+				if (M.Choosen() == 5) {
+					system("cls");
+					break;
+				}
+			} while (1);
+		}
+		if (m.Choosen() == 7) {
+			string name;
+			system("cls");
+			cout << "Enter The Name of File: ";
+			cin >> name;
+			name = name + ".txt";
+			t.InputFile(name);
+			cout << "Deal" << endl;
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 8) {
+			string name;
+			system("cls");
+			cout << "Enter The Name of File: ";
+			cin >> name;
+			name = name + ".txt";
+			t.OutputFile(name);
+			cout << "Deal" << endl;
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 9) {
+			system("cls");
+			t.Print();
+			_getch();
+			system("cls");
+		}
+		if (m.Choosen() == 10) {
+			system("cls");
+			exit(1);
+		}
 
-ostream& operator<<(ostream& os, const Date& dt)
-{
-  os << dt.day << "d " << dt.month << ' ' << dt.year << "y " << dt.hour << "h ";
-  return os;
+	} while (1);
 }
 
 int main() {
-  Temperature t;
-  Date d;
-  srand(time(NULL));
-  //заполн¤ет массив случайной температурой
-  for (int i = 0; i < 12; i++) {
-    for (int j = 1; j <= t.ReturnMaxDay(Month(i)); j++) {
-      for (int k = 0; k < 24; k++) {
-        t.SetTemp(k, j, Month(i), 2018, rand() % 10000);
-      }
-    }
-  }
-  //t.Print();
-  //cout << endl;
-  //cout << t.AvgTemp(0, 1, "january", 23, 31, "july") << endl;
-  //cout << t.AvgTemp("february") << endl;
-  //cout << t.AvgTemp() << endl;
-  //cout << t.AvgTemp("day", "july") << endl;
-  //cout << t.AvgTemp("night", "april") << endl;
-  t.InputFile("TEMP.txt");
-  t.OutputFile("TEMP.txt");
-  t.SetStartDate(14, 5, "march", 2018);
-  d = t.GetStartDate();
-  cout << d.day << d.month << d.year << d.hour << endl;
+	srand(time(NULL));	
+	Print();
 
-  system("pause");
-  return 0;
+	return 0;
 }
