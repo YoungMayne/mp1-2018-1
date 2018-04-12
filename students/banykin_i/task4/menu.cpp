@@ -1,7 +1,7 @@
 #include "menu.h"
 #include "Temperature.h"
 
-menu::menu(){Init();}
+menu::menu() { Init(); }
 
 
 menu::~menu() { Init(); }
@@ -44,7 +44,7 @@ void menu::Start() {
 	for (int i = 0; i <= amount; i++) {
 
 		if (i == counter) {
-			if(counter > 8)
+			if (counter > 8)
 				cout << ">>  " << menuFunctions[i] << endl;
 			else
 				cout << ">> " << menuFunctions[i] << endl;
