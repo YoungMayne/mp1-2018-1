@@ -115,15 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Clients.cpp" />
     <ClCompile Include="Deposit.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="number4.cpp" />
+    <ClCompile Include="ProcessingСenter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clients.h" />
     <ClInclude Include="Deposit.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="number4.h" />
+    <ClInclude Include="ProcessingСenter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,6 +12,7 @@ struct Date {
 	string month;
 	int year;
 	int hour;
+	}
 };
 
 struct Temp {

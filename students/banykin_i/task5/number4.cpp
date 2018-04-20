@@ -55,6 +55,13 @@ number4::number4(int number) {
 	}
 }
 
+number4::number4(char* number) {
+	main[3] = number[3];
+	main[2] = number[2];
+	main[1] = number[1];
+	main[0] = number[0];
+}
+
 number4::number4(std::string number) {
 	for (int i = 0; i < 4; i++)
 		main[i] = number[i];
@@ -143,6 +150,13 @@ std::ostream& operator<<(std::ostream& cout, const number4& tmp) {
 	for (int i = 0; i < 4; i++)
 		cout << tmp.main[i];
 	return cout;
+}
+
+bool number4::operator==(number4 number) {
+	for (int i = 0; i < 4; i++)
+		if (CharToInt(this->main[i]) != CharToInt(number.main[i]))
+			return false;
+	return true;
 }
 
 number4::~number4() {
