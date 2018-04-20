@@ -111,11 +111,11 @@ void ProcessingСenter::RegisterFromFile(number4 number, std::string _name, std:
 		client[number.ToInt() - 1].durable = client[number.ToInt() - 1].close.month - client[number.ToInt() - 1].open.month;
 	if (client[number.ToInt() - 1].open.year < client[number.ToInt() - 1].close.year) {
 		if (client[number.ToInt() - 1].open.month - client[number.ToInt() - 1].close.month == 0)
-			client[number.ToInt() - 1].durable = (client[number.ToInt() - 1].close.year - client[number.ToInt() - 1].open.year) * 12;
+			client[number.ToInt() - 1].durable = (client[number.ToInt() - 1].close.year - client[number.ToInt() - 1].open.year) * 12 * (client[number.ToInt() - 1].close.year - client[number.ToInt() - 1].open.year);
 		if (client[number.ToInt() - 1].open.month - client[number.ToInt() - 1].close.month > 0)
-			client[number.ToInt() - 1].durable = (client[number.ToInt() - 1].close.month + 12) - client[number.ToInt() - 1].open.month;
+			client[number.ToInt() - 1].durable = ((client[number.ToInt() - 1].open.month + 12) - client[number.ToInt() - 1].close.month) * 12 * (client[number.ToInt() - 1].close.year - client[number.ToInt() - 1].open.year);
 		if (client[number.ToInt() - 1].open.month - client[number.ToInt() - 1].close.month < 0)
-			client[number.ToInt() - 1].durable = (client[number.ToInt() - 1].open.month + 12) - client[number.ToInt() - 1].close.month;
+			client[number.ToInt() - 1].durable = (client[number.ToInt() - 1].close.month - client[number.ToInt() - 1].open.month) * 12 * (client[number.ToInt() - 1].close.year - client[number.ToInt() - 1].open.year);
 	}
 	Working(number.ToInt() - 1);
 }
