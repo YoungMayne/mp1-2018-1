@@ -231,5 +231,4 @@ void ProcessingСenter::LoadFromFile() {
 }
 
 ProcessingСenter::~ProcessingСenter() {
-	delete[] client;
 }
