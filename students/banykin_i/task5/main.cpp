@@ -14,14 +14,14 @@ void Print() {
 	menu m1;
 	menu m2;
 
-	m1.SetName("Регистрация");
-	m1.SetName("Авторизация");
-	m1.SetName("Выйти");
+	m1.SetName("Р РµРіРёСЃС‚СЂР°С†РёСЏ");
+	m1.SetName("РђРІС‚РѕСЂРёР·Р°С†РёСЏ");
+	m1.SetName("Р’С‹Р№С‚Рё");
 
-	m2.SetName("Информация о счете");
-	m2.SetName("Открыть депозит");
-	m2.SetName("Снять проценты");
-	m2.SetName("Выйти");
+	m2.SetName("РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‡РµС‚Рµ");
+	m2.SetName("РћС‚РєСЂС‹С‚СЊ РґРµРїРѕР·РёС‚");
+	m2.SetName("РЎРЅСЏС‚СЊ РїСЂРѕС†РµРЅС‚С‹");
+	m2.SetName("Р’С‹Р№С‚Рё");
 
 	while (1) {
 		m1.Start();
@@ -30,17 +30,17 @@ void Print() {
 			string name;
 			string pass;
 			int money;
-			cout << "Ваше имя: ";
+			cout << "Р’Р°С€Рµ РёРјСЏ: ";
 			cin >> name;
-			cout << "Введите пароль: ";
+			cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
 			cin >> pass;
 			if (!c.CheckPassword(pass))
-				cout << "Пароль должен быть длиннее 3 символов";
+				cout << "РџР°СЂРѕР»СЊ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РґР»РёРЅРЅРµРµ 3 СЃРёРјРІРѕР»РѕРІ";
 			else {
-				cout << "Сумма на вашем счету: ";
+				cout << "РЎСѓРјРјР° РЅР° РІР°С€РµРј СЃС‡РµС‚Сѓ: ";
 				cin >> money;
 				c.Register(name, pass, money);
-				cout << "Ваш номер: " << c.GetNumber() << endl;
+				cout << "Р’Р°С€ РЅРѕРјРµСЂ: " << c.GetNumber() << endl;
 			}
 			_getch();
 			system("cls");
@@ -49,9 +49,9 @@ void Print() {
 			system("cls");
 			string pass = "";
 			int num = 0;
-			cout << "Ваш номер: ";
+			cout << "Р’Р°С€ РЅРѕРјРµСЂ: ";
 			cin >> num;
-			cout << "Введите пароль: ";
+			cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
 			cin >> pass;
 			if (c.Authorization(num, pass) == true) {
 				system("cls");
@@ -59,14 +59,14 @@ void Print() {
 					m2.Start();
 					if (m2.Choosen() == 0) {
 						system("cls");
-						cout << "Номер счета: " << c.GetNumber() << endl;
-						cout << "Имя: " << c.GetName() << endl;
-						cout << "Денег на счету: " << c.GetCurrentMoney() << endl;
-						cout << "Денег на депозите: " << c.GetDeposit() << endl;
-						cout << "Начало депозита: " << c.GetOpenDate().day << " " << c.GetOpenDate().month << " " << c.GetOpenDate().year << endl;
-						cout << "Срок депозита: " << c.GetCloseDate().day << " " << c.GetCloseDate().month << " " << c.GetCloseDate().year << endl;
-						cout << "Под процент: " << c.GetPercent() << " % годовых " << endl;
-						cout << "Накопилось: " << c.GetMoney() << endl;
+						cout << "РќРѕРјРµСЂ СЃС‡РµС‚Р°: " << c.GetNumber() << endl;
+						cout << "РРјСЏ: " << c.GetName() << endl;
+						cout << "Р”РµРЅРµРі РЅР° СЃС‡РµС‚Сѓ: " << c.GetCurrentMoney() << endl;
+						cout << "Р”РµРЅРµРі РЅР° РґРµРїРѕР·РёС‚Рµ: " << c.GetDeposit() << endl;
+						cout << "РќР°С‡Р°Р»Рѕ РґРµРїРѕР·РёС‚Р°: " << c.GetOpenDate().day << " " << c.GetOpenDate().month << " " << c.GetOpenDate().year << endl;
+						cout << "РЎСЂРѕРє РґРµРїРѕР·РёС‚Р°: " << c.GetCloseDate().day << " " << c.GetCloseDate().month << " " << c.GetCloseDate().year << endl;
+						cout << "РџРѕРґ РїСЂРѕС†РµРЅС‚: " << c.GetPercent() << " % РіРѕРґРѕРІС‹С… " << endl;
+						cout << "РќР°РєРѕРїРёР»РѕСЃСЊ: " << c.GetMoney() << endl;
 						_getch();
 						system("cls");
 					}
@@ -75,29 +75,29 @@ void Print() {
 						if (c.CheckDeposite()) {
 							int money = 0;
 							int value = 0;
-							cout << "Введите сумму депозита: ";
+							cout << "Р’РІРµРґРёС‚Рµ СЃСѓРјРјСѓ РґРµРїРѕР·РёС‚Р°: ";
 							cin >> money;
 							if (!c.CheckMoney(money))
-								cout << "Недостаточно средств";
+								cout << "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ";
 							else {
-								cout << "Введите срок депозита(Возможные варианты: 3 месяца, 6 месяцев, 12 месяцев, 24 месяца, 36 месяцев):  " << endl;
+								cout << "Р’РІРµРґРёС‚Рµ СЃСЂРѕРє РґРµРїРѕР·РёС‚Р°(Р’РѕР·РјРѕР¶РЅС‹Рµ РІР°СЂРёР°РЅС‚С‹: 3 РјРµСЃСЏС†Р°, 6 РјРµСЃСЏС†РµРІ, 12 РјРµСЃСЏС†РµРІ, 24 РјРµСЃСЏС†Р°, 36 РјРµСЃСЏС†РµРІ):  " << endl;
 								cin >> value;
 								if (c.CheckDate(value))
 									c.OpenDeposit(value, money);
 								else
-									cout << "Такой возможности не существует" << endl;
+									cout << "РўР°РєРѕР№ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚" << endl;
 							}
 						}
 						else
-							cout << "Депозит уже отрыт \nМожете узнать информацию в пункте Информация о счете" << endl;
+							cout << "Р”РµРїРѕР·РёС‚ СѓР¶Рµ РѕС‚СЂС‹С‚ \nРњРѕР¶РµС‚Рµ СѓР·РЅР°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РІ РїСѓРЅРєС‚Рµ РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‡РµС‚Рµ" << endl;
 						_getch();
 						system("cls");
 					}
 					if (m2.Choosen() == 2) {
 						if (c.TakeMoney())
-							cout << "Успешно!";
+							cout << "РЈСЃРїРµС€РЅРѕ!";
 						else
-							cout << "Недостаточно средств на счете";
+							cout << "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ РЅР° СЃС‡РµС‚Рµ";
 						_getch();
 						system("cls");
 					}
@@ -109,7 +109,7 @@ void Print() {
 			}
 			else {
 				system("cls");
-				cout << "Неверный номер/пароль" << endl;
+				cout << "РќРµРІРµСЂРЅС‹Р№ РЅРѕРјРµСЂ/РїР°СЂРѕР»СЊ" << endl;
 				_getch();
 			}
 		}

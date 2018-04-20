@@ -17,11 +17,11 @@ std::string Deposit::GetName() {
 	return client[currentUser].info.name;
 }
 
-Processing—enter::Date Deposit::GetOpenDate() {
+Processing–°enter::Date Deposit::GetOpenDate() {
 	return client[currentUser].open;
 }
 
-Processing—enter::Date Deposit::GetCloseDate() {
+Processing–°enter::Date Deposit::GetCloseDate() {
 	return client[currentUser].close;
 }
 

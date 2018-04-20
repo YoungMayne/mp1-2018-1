@@ -1,10 +1,10 @@
-#include "Processing—enter.h"
+#include "Processing–°enter.h"
 
-Processing—enter::Processing—enter() {
+Processing–°enter::Processing–°enter() {
 	LoadFromFile();
 }
 
-void Processing—enter::Working(int number) {
+void Processing–°enter::Working(int number) {
 	if (client[number].deposite < 100000 && client[number].durable == 3)
 		client[number].percent = 5;
 	if (client[number].deposite < 100000 && client[number].durable == 6)
@@ -79,22 +79,22 @@ void Processing—enter::Working(int number) {
 	}
 }
 
-int Processing—enter::Month(std::string month) {
-	if (month == "ﬂÌ‚‡¸") return 1;
-	if (month == "‘Â‚‡Î¸") return 2;
-	if (month == "Ã‡Ú") return 3;
-	if (month == "¿ÔÂÎ¸") return 4;
-	if (month == "Ã‡È") return 5;
-	if (month == "»˛Ì¸") return 6;
-	if (month == "»˛Î¸") return 7;
-	if (month == "¿‚„ÛÒ") return 8;
-	if (month == "—ÂÌÚˇ·¸") return 9;
-	if (month == "ŒÍÚˇ·¸") return 10;
-	if (month == "ÕÓˇ·¸") return 11;
-	if (month == "ƒÂÍ‡·¸") return 12;
+int Processing–°enter::Month(std::string month) {
+	if (month == "–Ø–Ω–≤–∞—Ä—å") return 1;
+	if (month == "–§–µ–≤—Ä–∞–ª—å") return 2;
+	if (month == "–ú–∞—Ä—Ç") return 3;
+	if (month == "–ê–ø—Ä–µ–ª—å") return 4;
+	if (month == "–ú–∞–π") return 5;
+	if (month == "–ò—é–Ω—å") return 6;
+	if (month == "–ò—é–ª—å") return 7;
+	if (month == "–ê–≤–≥—É—Å") return 8;
+	if (month == "–°–µ–Ω—Ç—è–±—Ä—å") return 9;
+	if (month == "–û–∫—Ç—è–±—Ä—å") return 10;
+	if (month == "–ù–æ—è–±—Ä—å") return 11;
+	if (month == "–î–µ–∫–∞–±—Ä—å") return 12;
 }
 
-void Processing—enter::RegisterFromFile(number4 number, std::string _name, std::string _pass, int _money, int _day, int _month, int _year, int day, int month, int year, int deposite, double percent) {
+void Processing–°enter::RegisterFromFile(number4 number, std::string _name, std::string _pass, int _money, int _day, int _month, int _year, int day, int month, int year, int deposite, double percent) {
 	client[number.ToInt() - 1].info.number = number;
 	client[number.ToInt() - 1].info.name = _name;
 	client[number.ToInt() - 1].info.pass = _pass;
@@ -120,7 +120,7 @@ void Processing—enter::RegisterFromFile(number4 number, std::string _name, std::
 	Working(number.ToInt() - 1);
 }
 
-void Processing—enter::LoadFromFile() {
+void Processing–°enter::LoadFromFile() {
 	std::ifstream file("clients.txt");
 	std::string str;
 	std::string _name;
@@ -230,5 +230,6 @@ void Processing—enter::LoadFromFile() {
 	file.close();
 }
 
-Processing—enter::~Processing—enter() {
+Processing–°enter::~Processing–°enter() {
+	delete[] client;
 }
