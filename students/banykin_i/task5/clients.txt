@@ -1,0 +1,18 @@
+number:0001
+name:dog
+pass:cat123
+cash:12345
+open:0 0 0
+close:0 0 0
+deposit:0
+percent:0
+
+number:0002
+name:dog
+pass:cat123
+cash:-858993460
+open:0 0 0
+close:0 0 0
+deposit:0
+percent:0
+
