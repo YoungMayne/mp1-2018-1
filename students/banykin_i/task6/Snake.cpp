@@ -7,7 +7,7 @@ Snake::Snake(int Step) {
 void Snake::HeadColor(float red, float green, float blue) {
 	headR = red;
 	headG = green;
-	headB = blue;
+	headB = blue;    
 }
 
 void Snake::TailColor(float red, float green, float blue) {
@@ -92,3 +92,4 @@ void Snake::SetCoordinates(int number, int x, int y) {
 Snake::~Snake() {
 	snake.clear();
 }
+

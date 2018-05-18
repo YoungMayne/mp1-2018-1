@@ -19,8 +19,8 @@ Map field(Width, Height, Step);
 int playerNumberOfMaxTail = 0;
 int playerGameDelay = 0;
 
-bool endless = false;//бесконечный режим
-bool itCanBePressed = true;//запрещает нажимать несколько клавиш за 1 цикл
+bool endless = false;//Р±РµСЃРєРѕРЅРµС‡РЅС‹Р№ СЂРµР¶РёРј
+bool itCanBePressed = true;//Р·Р°РїСЂРµС‰Р°РµС‚ РЅР°Р¶РёРјР°С‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ РєР»Р°РІРёС€ Р·Р° 1 С†С‹РєР»
 
 void SnakeBeginPosition() {
 	for (int i = 0; i < snake.GetTail(); i++) {
@@ -29,7 +29,7 @@ void SnakeBeginPosition() {
 }
 
 void StartMenu() {
-	//показываем консоль
+	//РїРѕРєР°Р·С‹РІР°РµРј РєРѕРЅСЃРѕР»СЊ
 	mainGame.ShowConsole();
 	system("cls");
 	std::cout << "Tails For Win(" << snake.GetTail() + 5 << "min): ";
@@ -42,18 +42,18 @@ void StartMenu() {
 		endless = true;
 	if (playerGameDelay < 50)
 		playerGameDelay = 50;
-	//убираем консоль
+	//СѓР±РёСЂР°РµРј РєРѕРЅСЃРѕР»СЊ
 	mainGame.HideConsole();
 }
 
 void ShowInformation() {
-	//начало игры
+	//РЅР°С‡Р°Р»Рѕ РёРіСЂС‹
 	if (!mainGame.Gameover() && snake.GetDirection() == STAY) {
 		char beginGame[50] = {};
 		sprintf_s(beginGame, "Move To Start");
 		mainGame.Text(beginGame, GLUT_BITMAP_TIMES_ROMAN_24, 1, 1, 1, Width / 2 - 100, Height / 2 + 200);
 	}
-	//проигрыш
+	//РїСЂРѕРёРіСЂС‹С€
 	if (mainGame.Gameover() && !mainGame.Gamewin()) {
 		char endGame[100] = {};
 		char endScore[50] = {};
@@ -65,7 +65,7 @@ void ShowInformation() {
 		mainGame.Text(endScore, GLUT_BITMAP_TIMES_ROMAN_24, 1, 1, 1, Width / 2 - 80, Height / 2 + 150);
 		mainGame.Text(key, GLUT_BITMAP_9_BY_15, 1, 1, 1, Width - 250, 12);
 	}
-	//победа
+	//РїРѕР±РµРґР°
 	if (mainGame.Gamewin()) {
 		char endScore[50] = {};
 		char winGame[50] = {};
@@ -77,19 +77,19 @@ void ShowInformation() {
 		mainGame.Text(endScore, GLUT_BITMAP_TIMES_ROMAN_24, 1, 1, 1, Width / 2 - 80, Height / 2 + 150);
 		mainGame.Text(key, GLUT_BITMAP_9_BY_15, 1, 1, 1, Width - 250, 12);
 	}
-	//хвост в реальном времени
+	//С…РІРѕСЃС‚ РІ СЂРµР°Р»СЊРЅРѕРј РІСЂРµРјРµРЅРё
 	if (!mainGame.Gameover() && !mainGame.Gamewin()) {
 		char tail[50] = {};
 		sprintf_s(tail, "Tail: %d", snake.GetTail());
 		mainGame.Text(tail, GLUT_BITMAP_9_BY_15, 0, 0, 0, 1, Height - 12);
 	}
-	//счет в реальном времени
+	//СЃС‡РµС‚ РІ СЂРµР°Р»СЊРЅРѕРј РІСЂРµРјРµРЅРё
 	if (!mainGame.Gameover() && !mainGame.Gamewin()) {
 		char score[50] = {};
 		sprintf_s(score, "Score: %d", mainGame.GetScore());
 		mainGame.Text(score, GLUT_BITMAP_9_BY_15, 0, 0, 0, 1, Height - 25);
 	}
-	//осталось хвоста в реальном времмени
+	//РѕСЃС‚Р°Р»РѕСЃСЊ С…РІРѕСЃС‚Р° РІ СЂРµР°Р»СЊРЅРѕРј РІСЂРµРјРјРµРЅРё
 	if (!endless)
 		if (!mainGame.Gameover() && !mainGame.Gamewin()) {
 			char lessTail[50] = {};
@@ -125,10 +125,10 @@ void Setup() {
 }
 
 void Move() {
-	//движение хвоста за головой
+	//РґРІРёР¶РµРЅРёРµ С…РІРѕСЃС‚Р° Р·Р° РіРѕР»РѕРІРѕР№
 	for (int i = snake.GetTail(); i > 0; i--)
 		snake.SetCoordinates(i, snake.GetX(i - 1), snake.GetY(i - 1));
-	//движение головы
+	//РґРІРёР¶РµРЅРёРµ РіРѕР»РѕРІС‹
 	switch (snake.GetDirection()) {
 	case LEFT:snake.Left(); break;
 	case RIGHT:snake.Right(); break;
@@ -138,7 +138,7 @@ void Move() {
 }
 
 void WallsCollision() {
-	//стенки
+	//СЃС‚РµРЅРєРё
 	if (snake.GetX(0) > field.GetRight() && snake.GetDirection() == RIGHT)
 		mainGame.Lose();
 	if (snake.GetX(0) < field.GetLeft() && snake.GetDirection() == LEFT)
@@ -150,7 +150,7 @@ void WallsCollision() {
 }
 
 void FruitsCollision() {
-	//фрукты
+	//С„СЂСѓРєС‚С‹
 	if (fruit.Collision(snake.GetX(0), snake.GetY(0))) {
 		mainGame.IncreaseScore(10);
 		snake.IncreaseTail(1);
@@ -159,7 +159,7 @@ void FruitsCollision() {
 }
 
 void TailCollision() {
-	//хвост
+	//С…РІРѕСЃС‚
 	int lostTail;
 	for (int i = snake.GetTail(); i > 0; i--) {
 		if (snake.GetX(0) == snake.GetX(i) && snake.GetY(0) == snake.GetY(i)) {
